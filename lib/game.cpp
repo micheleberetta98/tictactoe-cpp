@@ -3,9 +3,9 @@
 #include <memory>
 
 Game::Game() {
-    user = new Player("User", SymbolX);
-    computer = new Player("Computer", SymbolO);
-    turn = user;
+    player1 = new Player("Player 1", SymbolX);
+    player2 = new Player("Player 2", SymbolO);
+    turn = player1;
     boxes = vector<shared_ptr<Box>>(9);
     for (int i = 0; i < boxes.size(); i++) {
         boxes[i] = shared_ptr<Box>(new Box());
@@ -13,8 +13,8 @@ Game::Game() {
 }
 
 Game::~Game() {
-    delete user;
-    delete computer;
+    delete player1;
+    delete player2;
 }
 
 bool Game::initialized = false;
@@ -33,6 +33,10 @@ void Game::newGame() {
     initialized = false;
 }
 
+Player* Game::currentPlayer() {
+    return turn;
+}
+
 Player* Game::move(unsigned int boxNumber) {
     if (boxNumber > 8)
         return nullptr;
@@ -42,10 +46,10 @@ Player* Game::move(unsigned int boxNumber) {
     if (!box->player()) {
         box->setPlayer(turn);
 
-        if (*turn == *user) {
-            turn = computer;
+        if (*turn == *player1) {
+            turn = player2;
         } else {
-            turn = user;
+            turn = player1;
         }
     }
 
@@ -53,11 +57,13 @@ Player* Game::move(unsigned int boxNumber) {
 }
 
 bool equals(Player* p1, Player* p2, Player* p3) {
-    return *p1 == *p2 && *p2 == *p3;
+    if (p1 == nullptr || p2 == nullptr || p3 == nullptr)
+        return false;
+    return (*p1 == *p2) && (*p2 == *p3);
 }
 
 bool Game::boxesEqual(int i1, int i2, int i3) {
-    return equals(boxes[0]->player(), boxes[1]->player(), boxes[2]->player());
+    return equals(boxes[i1]->player(), boxes[i2]->player(), boxes[i3]->player());
 }
 
 Player* Game::winner() {
@@ -66,27 +72,27 @@ Player* Game::winner() {
         return boxes[0]->player();
 
     if (boxesEqual(3, 4, 5))
-        return boxes[0]->player();
+        return boxes[3]->player();
 
     if (boxesEqual(6, 7, 8))
-        return boxes[0]->player();
+        return boxes[6]->player();
 
     // Columns
     if (boxesEqual(0, 3, 6))
         return boxes[0]->player();
 
     if (boxesEqual(1, 4, 7))
-        return boxes[0]->player();
+        return boxes[1]->player();
 
     if (boxesEqual(2, 5, 8))
-        return boxes[0]->player();
+        return boxes[2]->player();
 
     // Diagonals
     if (boxesEqual(0, 4, 8))
         return boxes[0]->player();
 
     if (boxesEqual(2, 4, 6))
-        return boxes[0]->player();
+        return boxes[2]->player();
 
     return nullptr;
 }

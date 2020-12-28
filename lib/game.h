@@ -14,8 +14,8 @@ class Game {
     static bool initialized;
     static Game* game;
 
-    Player* user;
-    Player* computer;
+    Player* player1;
+    Player* player2;
     Player* turn;
     vector<shared_ptr<Box>> boxes;
 
@@ -29,6 +29,7 @@ class Game {
     static Game* instance();
     static void newGame();
     Player* move(unsigned int);
+    Player* currentPlayer();
 };
 
 #endif
