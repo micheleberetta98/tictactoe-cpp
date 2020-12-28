@@ -28,8 +28,10 @@ class Game {
 
     static Game* instance();
     static void newGame();
+
     Player* move(unsigned int);
     Player* currentPlayer();
+    vector<string> currentState();
 };
 
 #endif

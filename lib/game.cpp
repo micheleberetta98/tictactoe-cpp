@@ -56,14 +56,13 @@ Player* Game::move(unsigned int boxNumber) {
     return winner();
 }
 
-bool equals(Player* p1, Player* p2, Player* p3) {
-    if (p1 == nullptr || p2 == nullptr || p3 == nullptr)
-        return false;
-    return (*p1 == *p2) && (*p2 == *p3);
-}
-
-bool Game::boxesEqual(int i1, int i2, int i3) {
-    return equals(boxes[i1]->player(), boxes[i2]->player(), boxes[i3]->player());
+std::vector<std::string> Game::currentState() {
+    vector<string> state;
+    for (int i = 0; i < boxes.size(); i++) {
+        Player* p = boxes[i]->player();
+        state.push_back(p ? p->symbolStr() : string(1, SymbolNone));
+    }
+    return state;
 }
 
 Player* Game::winner() {
@@ -95,4 +94,14 @@ Player* Game::winner() {
         return boxes[2]->player();
 
     return nullptr;
+}
+
+bool equals(Player* p1, Player* p2, Player* p3) {
+    if (p1 == nullptr || p2 == nullptr || p3 == nullptr)
+        return false;
+    return (*p1 == *p2) && (*p2 == *p3);
+}
+
+bool Game::boxesEqual(int i1, int i2, int i3) {
+    return equals(boxes[i1]->player(), boxes[i2]->player(), boxes[i3]->player());
 }
