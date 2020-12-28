@@ -21,7 +21,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (txt.text !== "") return
             game.move(boxNumber)
         }
     }

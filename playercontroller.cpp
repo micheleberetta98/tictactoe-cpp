@@ -4,6 +4,6 @@
 
 PlayerController::PlayerController(QObject *parent) : QObject(parent) {}
 
-void PlayerController::changePlayerName(std::string playerName) {
+void PlayerController::updatePlayerName(std::string playerName) {
     Q_EMIT textChanged(QString(playerName.c_str()));
 }

@@ -7,10 +7,11 @@
 
 using namespace std;
 
-GameController::GameController(QObject *parent) : QObject(parent)
-{
+GameController::GameController(QObject* parent) : QObject(parent) {
     _playerController = shared_ptr<PlayerController>{new PlayerController()};
     updateCurrentPlayerName();
+
+    _winnerController = shared_ptr<WinnerController>{new WinnerController()};
 
     for (int i = 0; i < 9; i++) {
         _boxes[i] = shared_ptr<BoxController>(new BoxController());
@@ -19,7 +20,7 @@ GameController::GameController(QObject *parent) : QObject(parent)
 
 vector<BoxController*> GameController::boxControllers() {
     vector<BoxController*> controllers;
-    for (auto i = 0; i < _boxes.size(); i++)
+    for (unsigned long i = 0; i < _boxes.size(); i++)
         controllers.push_back(_boxes[i].get());
     return controllers;
 }
@@ -28,12 +29,28 @@ PlayerController* GameController::playerController() {
     return _playerController.get();
 }
 
+WinnerController* GameController::winnerController() {
+    return _winnerController.get();
+}
+
 void GameController::move(int boxNumber) {
     Game* game = Game::instance();
     Player* winner = game->move(boxNumber);
 
-    updateCurrentPlayerName();
     updateBoxValue(boxNumber);
+    if (winner) {
+        _winnerController->updateWinner(winner->getName());
+        _playerController->updatePlayerName("");
+    } else {
+        updateCurrentPlayerName();
+    }
+}
+
+void GameController::newGame() {
+    Game::newGame();
+    updateCurrentPlayerName();
+    for (unsigned long i = 0; i < _boxes.size(); i++)
+        updateBoxValue(i);
 }
 
 void GameController::updateBoxValue(int boxNumber) {
@@ -45,5 +62,5 @@ void GameController::updateBoxValue(int boxNumber) {
 void GameController::updateCurrentPlayerName() {
     Game* game = Game::instance();
     Player* currentPlayer = game->currentPlayer();
-    _playerController->changePlayerName(currentPlayer->getName());
+    _playerController->updatePlayerName(currentPlayer->getName());
 }

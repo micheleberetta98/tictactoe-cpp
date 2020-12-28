@@ -5,6 +5,7 @@
 
 #include "gamecontroller.h"
 #include "playercontroller.h"
+#include "winnercontroller.h"
 #include "lib/game.h"
 
 int main(int argc, char *argv[])
@@ -15,10 +16,12 @@ int main(int argc, char *argv[])
     std::shared_ptr<GameController> game{new GameController()};
     auto boxes = game->boxControllers();
     auto currentPlayer = game->playerController();
+    auto winner = game->winnerController();
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("game", game.get());
     engine.rootContext()->setContextProperty("currentPlayer", currentPlayer);
+    engine.rootContext()->setContextProperty("winner", winner);
     engine.rootContext()->setContextProperty("box0", boxes[0]);
     engine.rootContext()->setContextProperty("box1", boxes[1]);
     engine.rootContext()->setContextProperty("box2", boxes[2]);
