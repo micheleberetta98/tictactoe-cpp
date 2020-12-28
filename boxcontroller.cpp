@@ -1,15 +1,15 @@
-#include "box.h"
+#include "boxcontroller.h"
 
 #include <iostream>
 
-Box::Box(QObject *parent) : QObject(parent) {}
+BoxController::BoxController(QObject *parent) : QObject(parent) {}
 
-void Box::setId(int id) {
+void BoxController::setId(int id) {
     this->id = id;
     this->value = ' ';
 }
 
-void Box::setValue(char value) {
+void BoxController::setValue(char value) {
     std::cout << "Changing box value from " << this->value << " to " << value << std::endl;
     this->value = value;
     Q_EMIT textChanged(QString(value));

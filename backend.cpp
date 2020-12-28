@@ -1,13 +1,13 @@
 #include "backend.h"
 
 #include <iostream>
-#include "box.h"
+#include "boxcontroller.h"
 
 Backend::Backend(QObject *parent) : QObject(parent) {
     _turn = 'X';
 
     for (int i = 0; i < 9; i++) {
-        _boxes[i] = new Box();
+        _boxes[i] = new BoxController();
     }
 }
 
@@ -17,7 +17,7 @@ Backend::~Backend() {
     } */
 }
 
-std::vector<Box*> Backend::boxes() {
+std::vector<BoxController*> Backend::boxes() {
     return _boxes;
 }
 

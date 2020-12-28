@@ -31,14 +31,24 @@ if(ANDROID)
     add_library(tictactoe-cpp SHARED
       main.cpp
       backend.cpp
-      box.cpp
+      boxcontroller.cpp
+      lib/box.cpp
+      lib/entity.cpp
+      lib/game.cpp
+      lib/player.cpp
+      lib/symbol.cpp
       qml.qrc
     )
 else()
     add_executable(tictactoe-cpp
       main.cpp
       backend.cpp
-      box.cpp
+      boxcontroller.cpp
+      lib/box.cpp
+      lib/entity.cpp
+      lib/game.cpp
+      lib/player.cpp
+      lib/symbol.cpp
       qml.qrc
     )
 endif()

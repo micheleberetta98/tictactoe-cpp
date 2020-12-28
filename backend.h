@@ -4,7 +4,7 @@
 #include <QObject>
 #include <vector>
 
-#include "box.h"
+#include "boxcontroller.h"
 
 class Backend : public QObject
 {
@@ -12,15 +12,15 @@ class Backend : public QObject
 
 private:
     char _turn;
-    std::vector<Box*> _boxes{9};
+    std::vector<BoxController*> _boxes{9};
 
 public:
     Backend(QObject *parent = nullptr);
     ~Backend();
 
-    std::vector<Box*> boxes();
+    std::vector<BoxController*> boxes();
 
     Q_SLOT void move(int box);
 };
 
-#endif // BACKEND_H
+#endif
