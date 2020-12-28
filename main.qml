@@ -18,13 +18,22 @@ Window {
         padding: 10
         spacing: 10
 
-        TicTacToeGrid {}
+        TicTacToeGrid {
+            id: grid
+            enabled: false
+            Connections {
+                target: game
+                onGameStatusChanged: {
+                    grid.enabled = started
+                }
+            }
+        }
         Column {
             spacing: 5
             LabelledValue {
                 id: currentPlayerLabel
                 label: "Turno di:"
-                text: ""
+                text: "---"
                 Connections {
                     target: currentPlayer
                     onTextChanged: {

@@ -29,8 +29,10 @@ public:
     PlayerController* playerController();
     WinnerController* winnerController();
 
+    Q_SIGNAL void gameStatusChanged(bool started);
+
     Q_SLOT void move(int boxNumber);
     Q_SLOT void newGame();
 };
 
-#endif // GAMECONTROLLER_H
+#endif

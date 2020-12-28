@@ -9,8 +9,6 @@ using namespace std;
 
 GameController::GameController(QObject* parent) : QObject(parent) {
     _playerController = shared_ptr<PlayerController>{new PlayerController()};
-    updateCurrentPlayerName();
-
     _winnerController = shared_ptr<WinnerController>{new WinnerController()};
 
     for (int i = 0; i < 9; i++) {
@@ -41,6 +39,7 @@ void GameController::move(int boxNumber) {
     if (winner) {
         _winnerController->updateWinner(winner->getName());
         _playerController->updatePlayerName("");
+        Q_EMIT gameStatusChanged(false);
     } else {
         updateCurrentPlayerName();
     }
@@ -51,6 +50,8 @@ void GameController::newGame() {
     updateCurrentPlayerName();
     for (unsigned long i = 0; i < _boxes.size(); i++)
         updateBoxValue(i);
+
+    Q_EMIT gameStatusChanged(true);
 }
 
 void GameController::updateBoxValue(int boxNumber) {

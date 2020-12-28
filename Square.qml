@@ -3,10 +3,11 @@ import QtQuick 2.0
 Rectangle {
     property string text: ""
     property int boxNumber
+    // property bool enabled: false
 
     width: 100
     height: 100
-    color: "lightgray"
+    color: enabled ? "lightgray" : "darkgray"
 
     Text {
         id: txt
