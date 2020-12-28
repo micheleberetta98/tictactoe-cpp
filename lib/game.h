@@ -9,6 +9,11 @@
 
 using namespace std;
 
+struct Tris {
+    int i1 = -1;
+    int i2 = -1;
+    int i3 = -1;
+};
 class Game {
    private:
     static bool initialized;
@@ -20,8 +25,7 @@ class Game {
     vector<shared_ptr<Box>> boxes;
 
     Game();
-    bool boxesEqual(int, int, int);
-    Player* winner();
+    Tris getTrisIn(int, int, int);
 
    public:
     ~Game();
@@ -29,11 +33,13 @@ class Game {
     static Game* instance();
     static void newGame();
 
-    Player* move(unsigned int);
+    void move(unsigned int);
     Player* currentPlayer();
     vector<string> currentState();
     string currentBoxState(int);
     bool isBoardFull();
+    Player* winnerForTris(Tris);
+    Tris getTris();
 };
 
 #endif

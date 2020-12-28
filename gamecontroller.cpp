@@ -33,7 +33,12 @@ WinnerController* GameController::winnerController() {
 
 void GameController::move(int boxNumber) {
     Game* game = Game::instance();
-    Player* winner = game->move(boxNumber);
+
+    game->move(boxNumber);
+    updateBoxValue(boxNumber);
+
+    Tris tris = game->getTris();
+    Player* winner = game->winnerForTris(tris);
 
     updateBoxValue(boxNumber);
     if (winner) {

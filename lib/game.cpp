@@ -40,9 +40,9 @@ Player* Game::currentPlayer() {
     return turn;
 }
 
-Player* Game::move(unsigned int boxNumber) {
+void Game::move(unsigned int boxNumber) {
     if (boxNumber > 8)
-        return nullptr;
+        return;
 
     auto box = boxes[boxNumber];
 
@@ -55,8 +55,6 @@ Player* Game::move(unsigned int boxNumber) {
             turn = player1;
         }
     }
-
-    return winner();
 }
 
 vector<string> Game::currentState() {
@@ -80,33 +78,40 @@ bool Game::isBoardFull() {
     return takenBoxes == boxes.size();
 }
 
-Player* Game::winner() {
+Tris Game::getTris() {
+    Tris tris;
+
+    tris = getTrisIn(0, 1, 2);
+    if (tris.i1 != -1) return tris;
+
+    tris = getTrisIn(3, 4, 5);
+    if (tris.i1 != -1) return tris;
+
     // Rows
-    if (boxesEqual(0, 1, 2))
-        return boxes[0]->player();
-
-    if (boxesEqual(3, 4, 5))
-        return boxes[3]->player();
-
-    if (boxesEqual(6, 7, 8))
-        return boxes[6]->player();
+    tris = getTrisIn(6, 7, 8);
+    if (tris.i1 != -1) return tris;
 
     // Columns
-    if (boxesEqual(0, 3, 6))
-        return boxes[0]->player();
+    tris = getTrisIn(0, 3, 6);
+    if (tris.i1 != -1) return tris;
 
-    if (boxesEqual(1, 4, 7))
-        return boxes[1]->player();
+    tris = getTrisIn(1, 4, 7);
+    if (tris.i1 != -1) return tris;
 
-    if (boxesEqual(2, 5, 8))
-        return boxes[2]->player();
+    tris = getTrisIn(2, 5, 8);
+    if (tris.i1 != -1) return tris;
 
     // Diagonals
-    if (boxesEqual(0, 4, 8))
-        return boxes[0]->player();
+    tris = getTrisIn(0, 4, 8);
+    if (tris.i1 != -1) return tris;
 
-    if (boxesEqual(2, 4, 6))
-        return boxes[2]->player();
+    tris = getTrisIn(2, 4, 6);
+    return tris;
+}
+
+Player* Game::winnerForTris(Tris tris) {
+    if (tris.i1 != -1)
+        return boxes[tris.i1]->player();
 
     return nullptr;
 }
@@ -117,6 +122,16 @@ bool equals(Player* p1, Player* p2, Player* p3) {
     return (*p1 == *p2) && (*p2 == *p3);
 }
 
-bool Game::boxesEqual(int i1, int i2, int i3) {
-    return equals(boxes[i1]->player(), boxes[i2]->player(), boxes[i3]->player());
+Tris Game::getTrisIn(int i1, int i2, int i3) {
+    Tris tris;
+
+    if (equals(boxes[i1]->player(), boxes[i2]->player(), boxes[i3]->player())) {
+        tris.i1 = i1;
+        tris.i2 = i2;
+        tris.i3 = i3;
+    } else {
+        tris.i1 = tris.i2 = tris.i3 = -1;
+    }
+
+    return tris;
 }
