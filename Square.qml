@@ -18,8 +18,8 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (txt.text !== "") return;
-            backend.move(boxNumber)
+            if (txt.text !== "") return
+            game.move(boxNumber)
         }
     }
 }

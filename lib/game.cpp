@@ -7,7 +7,7 @@ Game::Game() {
     player2 = new Player("Player 2", SymbolO);
     turn = player1;
     boxes = vector<shared_ptr<Box>>(9);
-    for (int i = 0; i < boxes.size(); i++) {
+    for (auto i = 0; i < boxes.size(); i++) {
         boxes[i] = shared_ptr<Box>(new Box());
     }
 }
@@ -23,13 +23,14 @@ Game* Game::game = nullptr;
 Game* Game::instance() {
     if (!initialized) {
         game = new Game();
-        initialized = false;
+        initialized = true;
     }
     return game;
 }
 
 void Game::newGame() {
-    game->~Game();
+    if (game != nullptr)
+        game->~Game();
     initialized = false;
 }
 
@@ -58,7 +59,7 @@ Player* Game::move(unsigned int boxNumber) {
 
 std::vector<std::string> Game::currentState() {
     vector<string> state;
-    for (int i = 0; i < boxes.size(); i++) {
+    for (auto i = 0; i < boxes.size(); i++) {
         Player* p = boxes[i]->player();
         state.push_back(p ? p->symbolStr() : string(1, SymbolNone));
     }

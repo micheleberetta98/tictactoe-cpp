@@ -30,7 +30,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 if(ANDROID)
     add_library(tictactoe-cpp SHARED
       main.cpp
-      backend.cpp
+      gamecontroller.cpp
       boxcontroller.cpp
       lib/box.cpp
       lib/entity.cpp
@@ -42,7 +42,7 @@ if(ANDROID)
 else()
     add_executable(tictactoe-cpp
       main.cpp
-      backend.cpp
+      gamecontroller.cpp
       boxcontroller.cpp
       lib/box.cpp
       lib/entity.cpp

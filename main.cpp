@@ -1,29 +1,30 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <sstream>
+#include <memory>
 
-#include "backend.h"
+#include "gamecontroller.h"
+#include "lib/game.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    Backend* b = new Backend();
-    auto boxes = b->boxes();
+    std::shared_ptr<GameController> game{new GameController()};
+    auto boxes = game->boxes();
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("backend", b);
-    engine.rootContext()->setContextProperty("box0", boxes[0]);
-    engine.rootContext()->setContextProperty("box1", boxes[1]);
-    engine.rootContext()->setContextProperty("box2", boxes[2]);
-    engine.rootContext()->setContextProperty("box3", boxes[3]);
-    engine.rootContext()->setContextProperty("box4", boxes[4]);
-    engine.rootContext()->setContextProperty("box5", boxes[5]);
-    engine.rootContext()->setContextProperty("box6", boxes[6]);
-    engine.rootContext()->setContextProperty("box7", boxes[7]);
-    engine.rootContext()->setContextProperty("box8", boxes[8]);
+    engine.rootContext()->setContextProperty("game", game.get());
+    engine.rootContext()->setContextProperty("box0", boxes[0].get());
+    engine.rootContext()->setContextProperty("box1", boxes[1].get());
+    engine.rootContext()->setContextProperty("box2", boxes[2].get());
+    engine.rootContext()->setContextProperty("box3", boxes[3].get());
+    engine.rootContext()->setContextProperty("box4", boxes[4].get());
+    engine.rootContext()->setContextProperty("box5", boxes[5].get());
+    engine.rootContext()->setContextProperty("box6", boxes[6].get());
+    engine.rootContext()->setContextProperty("box7", boxes[7].get());
+    engine.rootContext()->setContextProperty("box8", boxes[8].get());
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
