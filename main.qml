@@ -4,12 +4,12 @@ import QtQuick.Window 2.12
 import QtQml 2.12
 
 Window {
-    width: 640
-    height: 480
-    maximumWidth: 640
-    maximumHeight: 480
-    minimumWidth: 640
-    minimumHeight: 480
+    width: 500
+    height: 325
+    maximumWidth: 500
+    maximumHeight: 325
+    minimumWidth: 500
+    minimumHeight: 325
     visible: true
     title: qsTr("Tic Tac Toe")
 
