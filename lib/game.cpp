@@ -5,11 +5,11 @@
 using namespace std;
 
 Game::Game() {
-    player1 = new Player("Player 1", SymbolX);
-    player2 = new Player("Player 2", SymbolO);
+    player1 = new Player("Giocatore 1 - X", SymbolX);
+    player2 = new Player("Giocatore 2 - O", SymbolO);
     turn = player1;
     boxes = vector<shared_ptr<Box>>(9);
-    for (auto i = 0; i < boxes.size(); i++) {
+    for (unsigned long i = 0; i < boxes.size(); i++) {
         boxes[i] = shared_ptr<Box>(new Box());
     }
 }
@@ -61,7 +61,7 @@ Player* Game::move(unsigned int boxNumber) {
 
 vector<string> Game::currentState() {
     vector<string> state;
-    for (auto i = 0; i < boxes.size(); i++) {
+    for (unsigned long i = 0; i < boxes.size(); i++) {
         Player* p = boxes[i]->player();
         state.push_back(p ? p->symbolStr() : string(1, SymbolNone));
     }
@@ -71,6 +71,13 @@ vector<string> Game::currentState() {
 string Game::currentBoxState(int boxNumber) {
     Player* p = boxes[boxNumber]->player();
     return p ? p->symbolStr() : string(1, SymbolNone);
+}
+
+bool Game::isBoardFull() {
+    unsigned long takenBoxes = 0;
+    for (unsigned long i = 0; i < boxes.size(); i++)
+        takenBoxes += (boxes[i]->player() ? 1 : 0);
+    return takenBoxes == boxes.size();
 }
 
 Player* Game::winner() {

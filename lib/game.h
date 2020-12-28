@@ -33,6 +33,7 @@ class Game {
     Player* currentPlayer();
     vector<string> currentState();
     string currentBoxState(int);
+    bool isBoardFull();
 };
 
 #endif

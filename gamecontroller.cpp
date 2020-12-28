@@ -40,6 +40,10 @@ void GameController::move(int boxNumber) {
         _winnerController->updateWinner(winner->getName());
         _playerController->updatePlayerName("");
         Q_EMIT gameStatusChanged(false);
+    } else if (game->isBoardFull()) {
+        _winnerController->updateWinner("Parità");
+        _playerController->updatePlayerName("");
+        Q_EMIT gameStatusChanged(false);
     } else {
         updateCurrentPlayerName();
     }
@@ -47,6 +51,7 @@ void GameController::move(int boxNumber) {
 
 void GameController::newGame() {
     Game::newGame();
+    _winnerController->updateWinner("");
     updateCurrentPlayerName();
     for (unsigned long i = 0; i < _boxes.size(); i++)
         updateBoxValue(i);
