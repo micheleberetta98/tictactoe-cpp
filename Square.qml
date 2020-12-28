@@ -6,13 +6,16 @@ Rectangle {
 
     width: 100
     height: 100
-    border.width: 1
-    border.color: "gray"
+    color: "lightgray"
 
     Text {
         id: txt
         text: parent.text
+        color: "#333"
         anchors.centerIn: parent
+        font.family: "Helvetica"
+        font.pointSize: 50
+        font.weight: Font.Bold
     }
 
     MouseArea {
