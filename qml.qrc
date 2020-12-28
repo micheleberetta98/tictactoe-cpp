@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Square.qml</file>
+        <file>TicTacToeGrid.qml</file>
+        <file>CurrentPlayerLabel.qml</file>
     </qresource>
 </RCC>

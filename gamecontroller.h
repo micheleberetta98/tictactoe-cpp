@@ -6,17 +6,26 @@
 #include <vector>
 
 #include "boxcontroller.h"
+#include "playercontroller.h"
+
+using namespace std;
 
 class GameController : public QObject
 {
     Q_OBJECT
 private:
-    std::vector<std::shared_ptr<BoxController>> _boxes{9};
+    vector<shared_ptr<BoxController>> _boxes{9};
+    shared_ptr<PlayerController> _playerController;
+
+    void updateBoxValue(int boxNumber);
+    void updateCurrentPlayerName();
 
 public:
     explicit GameController(QObject *parent = nullptr);
 
-    std::vector<std::shared_ptr<BoxController>> boxes();
+    vector<BoxController*> boxControllers();
+
+    PlayerController* playerController();
 
     Q_SLOT void move(int boxNumber);
 

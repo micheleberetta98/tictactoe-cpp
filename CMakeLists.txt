@@ -32,6 +32,7 @@ if(ANDROID)
       main.cpp
       gamecontroller.cpp
       boxcontroller.cpp
+      playercontroller.cpp
       lib/box.cpp
       lib/entity.cpp
       lib/game.cpp
@@ -44,6 +45,7 @@ else()
       main.cpp
       gamecontroller.cpp
       boxcontroller.cpp
+      playercontroller.cpp
       lib/box.cpp
       lib/entity.cpp
       lib/game.cpp
