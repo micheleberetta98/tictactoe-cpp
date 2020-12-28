@@ -32,6 +32,7 @@ class Game {
     Player* move(unsigned int);
     Player* currentPlayer();
     vector<string> currentState();
+    string currentBoxState(int);
 };
 
 #endif

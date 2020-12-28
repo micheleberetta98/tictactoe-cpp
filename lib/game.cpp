@@ -2,6 +2,8 @@
 
 #include <memory>
 
+using namespace std;
+
 Game::Game() {
     player1 = new Player("Player 1", SymbolX);
     player2 = new Player("Player 2", SymbolO);
@@ -57,13 +59,18 @@ Player* Game::move(unsigned int boxNumber) {
     return winner();
 }
 
-std::vector<std::string> Game::currentState() {
+vector<string> Game::currentState() {
     vector<string> state;
     for (auto i = 0; i < boxes.size(); i++) {
         Player* p = boxes[i]->player();
         state.push_back(p ? p->symbolStr() : string(1, SymbolNone));
     }
     return state;
+}
+
+string Game::currentBoxState(int boxNumber) {
+    Player* p = boxes[boxNumber]->player();
+    return p ? p->symbolStr() : string(1, SymbolNone);
 }
 
 Player* Game::winner() {

@@ -19,8 +19,7 @@ std::vector<std::shared_ptr<BoxController>> GameController::boxes() {
 void GameController::move(int boxNumber) {
     Game* game = Game::instance();
     Player* winner = game->move(boxNumber);
-    std::cout << winner << std::endl;
-    std::vector<std::string> state = game->currentState();
 
-    _boxes[boxNumber]->setValue(state[boxNumber].at(0));
+    std::string boxValue = game->currentBoxState(boxNumber);
+    _boxes[boxNumber]->setValue(boxValue);
 }
