@@ -31,6 +31,18 @@ WinnerController* GameController::winnerController() {
     return _winnerController.get();
 }
 
+void GameController::newGame() {
+    Game::newGame();
+    _winnerController->updateWinner("");
+    updateCurrentPlayerName();
+    for (unsigned long i = 0; i < _boxes.size(); i++) {
+        updateBoxValue(i);
+        updateBoxBackground(i, "lightgray");
+    }
+
+    Q_EMIT gameStatusChanged(true);
+}
+
 void GameController::move(int boxNumber) {
     Game* game = Game::instance();
 
@@ -42,32 +54,44 @@ void GameController::move(int boxNumber) {
 
     updateBoxValue(boxNumber);
     if (winner) {
-        _winnerController->updateWinner(winner->getName());
-        _playerController->updatePlayerName("");
-        Q_EMIT gameStatusChanged(false);
+        updateForWinner(tris, winner);
     } else if (game->isBoardFull()) {
-        _winnerController->updateWinner("Parità");
-        _playerController->updatePlayerName("");
-        Q_EMIT gameStatusChanged(false);
+        updateForTie();
     } else {
         updateCurrentPlayerName();
     }
 }
 
-void GameController::newGame() {
-    Game::newGame();
-    _winnerController->updateWinner("");
-    updateCurrentPlayerName();
-    for (unsigned long i = 0; i < _boxes.size(); i++)
-        updateBoxValue(i);
+void GameController::updateForWinner(Tris tris, Player* winner) {
+    _winnerController->updateWinner(winner->getName());
+    _playerController->updatePlayerName("");
+    updateAllBoxesBackground("darkgray");
+    updateBoxBackground(tris.i1, "green");
+    updateBoxBackground(tris.i2, "green");
+    updateBoxBackground(tris.i3, "green");
+    Q_EMIT gameStatusChanged(false);
+}
 
-    Q_EMIT gameStatusChanged(true);
+void GameController::updateForTie() {
+    _winnerController->updateWinner("Parità");
+    _playerController->updatePlayerName("");
+    updateAllBoxesBackground("darkgray");
+    Q_EMIT gameStatusChanged(false);
 }
 
 void GameController::updateBoxValue(int boxNumber) {
     Game* game = Game::instance();
     string boxValue = game->currentBoxState(boxNumber);
-    _boxes[boxNumber]->setValue(boxValue);
+    _boxes[boxNumber]->updateValue(boxValue);
+}
+
+void GameController::updateAllBoxesBackground(string boxColor) {
+    for (unsigned long i = 0; i < _boxes.size(); i++)
+        updateBoxBackground(i, boxColor);
+}
+
+void GameController::updateBoxBackground(int boxNumber, string boxColor) {
+    _boxes[boxNumber]->updateBackground(boxColor);
 }
 
 void GameController::updateCurrentPlayerName() {
