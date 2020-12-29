@@ -67,8 +67,7 @@ vector<string> Game::currentState() {
 }
 
 string Game::currentBoxState(int boxNumber) {
-    Player* p = boxes[boxNumber]->player();
-    return p ? p->symbolStr() : string(1, SymbolNone);
+    return boxes[boxNumber]->innerSymbol();
 }
 
 bool Game::isBoardFull() {

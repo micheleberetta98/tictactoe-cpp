@@ -2,10 +2,9 @@
 #define BOX_H
 
 #include <memory>
+#include <string>
 
 #include "player.h"
-
-using namespace std;
 
 class Box {
    private:
@@ -17,6 +16,8 @@ class Box {
 
     Player* player();
     void setPlayer(Player*);
+
+    std::string innerSymbol();
 };
 
 #endif

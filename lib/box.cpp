@@ -1,5 +1,9 @@
 #include "box.h"
 
+#include <string>
+
+#include "symbol.h"
+
 Box::Box() {
     p = nullptr;
 }
@@ -12,4 +16,9 @@ Player* Box::player() {
 
 void Box::setPlayer(Player* player) {
     p = player;
+}
+
+std::string Box::innerSymbol() {
+    if (p) return p->symbolStr();
+    return Symbol(SymbolNone).symbolStr();
 }
