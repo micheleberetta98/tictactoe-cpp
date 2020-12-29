@@ -3,9 +3,11 @@
 
 #include <string>
 
+#include "pretty.h"
+
 using namespace std;
 
-class Entity {
+class Entity : virtual public Pretty {
    protected:
     string name;
 
@@ -14,6 +16,8 @@ class Entity {
     virtual ~Entity();
 
     string getName();
+
+    string toPrettyString();
 };
 
 #endif

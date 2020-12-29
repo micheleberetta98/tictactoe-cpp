@@ -56,16 +56,16 @@ void Game::move(unsigned int boxNumber) {
     }
 }
 
-vector<string> Game::currentState() {
-    vector<string> state;
+vector<Box*> Game::currentState() {
+    vector<Box*> state;
     for (auto box = boxes.begin(); box != boxes.end(); box++) {
-        state.push_back((*box)->innerSymbol());
+        state.push_back((*box).get());
     }
     return state;
 }
 
-string Game::currentBoxState(int boxNumber) {
-    return boxes[boxNumber]->innerSymbol();
+Box* Game::currentBoxState(int boxNumber) {
+    return boxes[boxNumber].get();
 }
 
 bool Game::isBoardFull() {

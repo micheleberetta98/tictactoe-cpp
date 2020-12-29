@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "lib/box.h"
 #include "lib/game.h"
 #include "lib/player.h"
 
@@ -63,7 +64,7 @@ void GameController::move(int boxNumber) {
 }
 
 void GameController::updateForWinner(Tris tris, Player* winner) {
-    _winnerController->updateWinner(winner->getName());
+    _winnerController->updateWinner(winner->toPrettyString());
     _playerController->updatePlayerName("---");
     updateAllBoxesBackground("darkgray");
     updateBoxBackground(tris.i1, "green");
@@ -81,8 +82,8 @@ void GameController::updateForTie() {
 
 void GameController::updateBoxValue(int boxNumber) {
     Game* game = Game::instance();
-    string boxValue = game->currentBoxState(boxNumber);
-    _boxes[boxNumber]->updateValue(boxValue);
+    Box* box = game->currentBoxState(boxNumber);
+    _boxes[boxNumber]->updateValue(box->toPrettyString());
 }
 
 void GameController::updateAllBoxesBackground(string boxColor) {
@@ -97,5 +98,5 @@ void GameController::updateBoxBackground(int boxNumber, string boxColor) {
 void GameController::updateCurrentPlayerName() {
     Game* game = Game::instance();
     Player* currentPlayer = game->currentPlayer();
-    _playerController->updatePlayerName(currentPlayer->getName());
+    _playerController->updatePlayerName(currentPlayer->toPrettyString());
 }

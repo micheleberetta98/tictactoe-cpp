@@ -3,13 +3,17 @@
 
 #include <string>
 
+#include "pretty.h"
+
+using namespace std;
+
 enum SymbolEnum : char {
     SymbolX = 'X',
     SymbolO = 'O',
     SymbolNone = ' ',
 };
 
-class Symbol {
+class Symbol : virtual public Pretty {
    protected:
     SymbolEnum s;
 
@@ -18,7 +22,9 @@ class Symbol {
     virtual ~Symbol();
 
     SymbolEnum symbolValue();
-    std::string symbolStr();
+    string symbolStr();
+
+    string toPrettyString();
 };
 
 #endif

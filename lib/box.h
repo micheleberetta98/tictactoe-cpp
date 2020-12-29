@@ -5,8 +5,11 @@
 #include <string>
 
 #include "player.h"
+#include "pretty.h"
 
-class Box {
+using namespace std;
+
+class Box : public Pretty {
    private:
     Player* p;
 
@@ -17,7 +20,7 @@ class Box {
     Player* player();
     void setPlayer(Player*);
 
-    std::string innerSymbol();
+    string toPrettyString();
 };
 
 #endif

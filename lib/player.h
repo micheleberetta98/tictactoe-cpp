@@ -13,6 +13,8 @@ class Player : public Entity, public Symbol {
     Player(string, SymbolEnum);
     virtual ~Player();
     virtual bool operator==(const Player&);
+
+    virtual string toPrettyString();
 };
 
 #endif

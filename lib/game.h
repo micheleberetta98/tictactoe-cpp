@@ -35,8 +35,8 @@ class Game {
 
     void move(unsigned int);
     Player* currentPlayer();
-    vector<string> currentState();
-    string currentBoxState(int);
+    vector<Box*> currentState();
+    Box* currentBoxState(int);
     bool isBoardFull();
     Player* winnerForTris(Tris);
     Tris getTris();

@@ -4,6 +4,8 @@
 
 #include "symbol.h"
 
+using namespace std;
+
 Box::Box() {
     p = nullptr;
 }
@@ -18,7 +20,7 @@ void Box::setPlayer(Player* player) {
     p = player;
 }
 
-std::string Box::innerSymbol() {
+string Box::toPrettyString() {
     if (p) return p->symbolStr();
     return Symbol(SymbolNone).symbolStr();
 }
