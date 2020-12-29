@@ -18,8 +18,8 @@ GameController::GameController(QObject* parent) : QObject(parent) {
 
 vector<BoxController*> GameController::boxControllers() {
     vector<BoxController*> controllers;
-    for (unsigned long i = 0; i < _boxes.size(); i++)
-        controllers.push_back(_boxes[i].get());
+    for (auto box = _boxes.begin(); box != _boxes.end(); box++)
+        controllers.push_back((*box).get());
     return controllers;
 }
 

@@ -8,9 +8,8 @@ Game::Game() {
     player1 = new Player("Giocatore 1 - X", SymbolX);
     player2 = new Player("Giocatore 2 - O", SymbolO);
     turn = player1;
-    boxes = vector<shared_ptr<Box>>(9);
-    for (unsigned long i = 0; i < boxes.size(); i++) {
-        boxes[i] = shared_ptr<Box>(new Box());
+    for (unsigned long i = 0; i < 9; i++) {
+        boxes.push_back(shared_ptr<Box>(new Box()));
     }
 }
 
@@ -59,9 +58,8 @@ void Game::move(unsigned int boxNumber) {
 
 vector<string> Game::currentState() {
     vector<string> state;
-    for (unsigned long i = 0; i < boxes.size(); i++) {
-        Player* p = boxes[i]->player();
-        state.push_back(p ? p->symbolStr() : string(1, SymbolNone));
+    for (auto box = boxes.begin(); box != boxes.end(); box++) {
+        state.push_back((*box)->innerSymbol());
     }
     return state;
 }
@@ -72,8 +70,8 @@ string Game::currentBoxState(int boxNumber) {
 
 bool Game::isBoardFull() {
     unsigned long takenBoxes = 0;
-    for (unsigned long i = 0; i < boxes.size(); i++)
-        takenBoxes += (boxes[i]->player() ? 1 : 0);
+    for (auto box = boxes.begin(); box != boxes.end(); box++)
+        takenBoxes += (*box)->player() ? 1 : 0;
     return takenBoxes == boxes.size();
 }
 
