@@ -33,7 +33,7 @@ WinnerController* GameController::winnerController() {
 
 void GameController::newGame() {
     Game::newGame();
-    _winnerController->updateWinner("");
+    _winnerController->updateWinner("---");
     updateCurrentPlayerName();
     for (unsigned long i = 0; i < _boxes.size(); i++) {
         updateBoxValue(i);
@@ -64,7 +64,7 @@ void GameController::move(int boxNumber) {
 
 void GameController::updateForWinner(Tris tris, Player* winner) {
     _winnerController->updateWinner(winner->getName());
-    _playerController->updatePlayerName("");
+    _playerController->updatePlayerName("---");
     updateAllBoxesBackground("darkgray");
     updateBoxBackground(tris.i1, "green");
     updateBoxBackground(tris.i2, "green");
@@ -74,7 +74,7 @@ void GameController::updateForWinner(Tris tris, Player* winner) {
 
 void GameController::updateForTie() {
     _winnerController->updateWinner("Parità");
-    _playerController->updatePlayerName("");
+    _playerController->updatePlayerName("---");
     updateAllBoxesBackground("darkgray");
     Q_EMIT gameStatusChanged(false);
 }
