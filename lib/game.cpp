@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Inizializza i giocatori, il turno e le varie celle
 Game::Game() {
     player1 = new Player("Giocatore 1 - X", SymbolX);
     player2 = new Player("Giocatore 2 - O", SymbolO);
@@ -21,6 +22,7 @@ Game::~Game() {
 bool Game::initialized = false;
 Game* Game::game = nullptr;
 
+// Metodo statico per l'accesso alla singola istanza
 Game* Game::instance() {
     if (!initialized) {
         game = new Game();
@@ -29,6 +31,8 @@ Game* Game::instance() {
     return game;
 }
 
+// Resetta il gioco, fancendone iniziare uno nuovo
+// alla prossima chiamata di "instance()"
 void Game::newGame() {
     if (game != nullptr)
         game->~Game();
@@ -39,6 +43,8 @@ Player* Game::currentPlayer() {
     return turn;
 }
 
+// Esegue una mossa (se possibile)
+// e cambia il turno del giocatore
 void Game::move(unsigned int boxNumber) {
     if (boxNumber > 8)
         return;
@@ -56,6 +62,7 @@ void Game::move(unsigned int boxNumber) {
     }
 }
 
+// Ritorna lo stato delle celle
 vector<Box*> Game::currentState() {
     vector<Box*> state;
     for (auto box = boxes.begin(); box != boxes.end(); box++) {
@@ -64,10 +71,13 @@ vector<Box*> Game::currentState() {
     return state;
 }
 
+// Ritorna lo stato di una cella particolare
 Box* Game::currentBoxState(int boxNumber) {
     return boxes[boxNumber].get();
 }
 
+// Indica se la board è stata completamente occupata
+// Utile per controllare se la partita è terminata con una patta
 bool Game::isBoardFull() {
     unsigned long takenBoxes = 0;
     for (auto box = boxes.begin(); box != boxes.end(); box++)
@@ -75,6 +85,7 @@ bool Game::isBoardFull() {
     return takenBoxes == boxes.size();
 }
 
+// Controlla la presenza o meno di un tris in tutta la board
 Tris Game::getTris() {
     Tris tris;
 
@@ -106,6 +117,8 @@ Tris Game::getTris() {
     return tris;
 }
 
+// Se passato un tris esistente, ritorna il giocatore che
+// l'ha fatto
 Player* Game::winnerForTris(Tris tris) {
     if (tris.i1 != -1)
         return boxes[tris.i1]->player();
@@ -113,12 +126,14 @@ Player* Game::winnerForTris(Tris tris) {
     return nullptr;
 }
 
+// Utilità per controllare se 3 player sono uguali
 bool equals(Player* p1, Player* p2, Player* p3) {
     if (p1 == nullptr || p2 == nullptr || p3 == nullptr)
         return false;
     return (*p1 == *p2) && (*p2 == *p3);
 }
 
+// Funzione di utilità per trovare un tris in 3 posizioni
 Tris Game::getTrisIn(int i1, int i2, int i3) {
     Tris tris;
 

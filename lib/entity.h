@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Gestisce una entità con un suo nome
 class Entity : virtual public Pretty {
    protected:
     string name;

@@ -26,10 +26,13 @@ struct {
 PrettyGame::PrettyGame() {}
 PrettyGame::~PrettyGame() {}
 
+// Converte tra coordinate (0-2, 0-2) in indice 0-8
 inline int toBoxNumber(int row, int col) {
     return row * 3 + col;
 }
 
+// Le coordinate (row, col) sono ammissibili se negli intervalli
+// specificati e se la cella è libera
 bool isOk(int row, int col) {
     if (row < 0 || row > 2 || col < 0 || col > 2)
         return false;
@@ -39,6 +42,7 @@ bool isOk(int row, int col) {
     return box->player() == nullptr;
 }
 
+// Esegue una mossa, chiedendo l'input all'utente
 void PrettyGame::move() {
     Game* game = Game::instance();
     int row = -1;
@@ -52,10 +56,12 @@ void PrettyGame::move() {
     game->move(toBoxNumber(row, col));
 }
 
+// Utilità per stampare un separatore di riga
 void printRowSep(string left, string mid, string right) {
     cout << left << Borders.hor << mid << Borders.hor << mid << Borders.hor << right << endl;
 }
 
+// Utilità per stampare la riga con i contenuti delle celle
 void printRowBox(Box* boxLeft, Box* boxMid, Box* boxRight) {
     cout << Borders.ver << " " << boxLeft->toPrettyString() << " ";
     cout << Borders.ver << " " << boxMid->toPrettyString() << " ";
@@ -63,6 +69,7 @@ void printRowBox(Box* boxLeft, Box* boxMid, Box* boxRight) {
     cout << Borders.ver << endl;
 }
 
+// Stampa una rappresentazione grafica del gioco a riga di comando
 void PrettyGame::printGame() {
     Game* game = Game::instance();
     vector<Box*> boxes = game->currentState();
@@ -76,6 +83,7 @@ void PrettyGame::printGame() {
     printRowSep(Borders.btmLeft, Borders.btmMid, Borders.btmRight);
 }
 
+// Controlla e stampa l'eventuale vincitore
 bool PrettyGame::checkForWinner() {
     Game* game = Game::instance();
     Player* winner = game->winnerForTris(game->getTris());
@@ -91,6 +99,8 @@ bool PrettyGame::checkForWinner() {
     return false;
 }
 
+// Chiede se si vuole fare un nuovo gioco ed eventualmente
+// resetta di conseguenza lo stato del gioco
 bool PrettyGame::playAgain() {
     char answer;
     do {

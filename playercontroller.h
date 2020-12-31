@@ -4,6 +4,9 @@
 #include <QObject>
 #include <string>
 
+// Controller per il nome del giocatore che deve muovere.
+// Definisce un SIGNAL:
+// - textChanged per il cambio del testo da mostrare
 class PlayerController : public QObject {
     Q_OBJECT
    public:

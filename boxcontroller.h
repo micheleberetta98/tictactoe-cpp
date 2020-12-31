@@ -4,6 +4,10 @@
 #include <QObject>
 #include <string>
 
+// Controller per una singola cella
+// Definisce due SIGNAL:
+// - textChanged per il cambio del contenuto (X o O)
+// - backgroundChanged per il cambio del colore di sfondo
 class BoxController : public QObject {
     Q_OBJECT
 

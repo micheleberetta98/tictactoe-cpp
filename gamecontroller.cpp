@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// L'istanziamento prevede l'istanziamento anche degli altri controller
 GameController::GameController(QObject* parent) : QObject(parent) {
     _playerController = shared_ptr<PlayerController>{new PlayerController()};
     _winnerController = shared_ptr<WinnerController>{new WinnerController()};
@@ -17,6 +18,7 @@ GameController::GameController(QObject* parent) : QObject(parent) {
     }
 }
 
+// Getter per accedere ai vari box controller
 vector<BoxController*> GameController::boxControllers() {
     vector<BoxController*> controllers;
     for (auto box = _boxes.begin(); box != _boxes.end(); box++)
@@ -24,14 +26,18 @@ vector<BoxController*> GameController::boxControllers() {
     return controllers;
 }
 
+// Getter per accedere al controller del giocatore
 PlayerController* GameController::playerController() {
     return _playerController.get();
 }
 
+// Getter per accedere al controller del vincitore
 WinnerController* GameController::winnerController() {
     return _winnerController.get();
 }
 
+// Reset del gioco: pulisce lo stato precedente e
+// riporta la board allo stato iniziale
 void GameController::newGame() {
     Game::newGame();
     _winnerController->updateWinner("---");
@@ -44,6 +50,9 @@ void GameController::newGame() {
     Q_EMIT gameStatusChanged(true);
 }
 
+// SLOT usato per eseguire una mossa
+// Emette degli eventi per l'aggiornamento dell'interfaccia grafica
+// (per le box, il turno ed eventualmente il vincitore)
 void GameController::move(int boxNumber) {
     Game* game = Game::instance();
 
@@ -63,6 +72,7 @@ void GameController::move(int boxNumber) {
     }
 }
 
+// Funzione di utilità che aggiorna l'interfaccia se si ha un vincitore
 void GameController::updateForWinner(Tris tris, Player* winner) {
     _winnerController->updateWinner(winner->toPrettyString());
     _playerController->updatePlayerName("---");
@@ -73,6 +83,7 @@ void GameController::updateForWinner(Tris tris, Player* winner) {
     Q_EMIT gameStatusChanged(false);
 }
 
+// Funzione di utilità che aggiorna l'interfaccia se si ha una patta
 void GameController::updateForTie() {
     _winnerController->updateWinner("Parità");
     _playerController->updatePlayerName("---");
@@ -80,21 +91,25 @@ void GameController::updateForTie() {
     Q_EMIT gameStatusChanged(false);
 }
 
+// Aggiorna il contenuto di una box particolare
 void GameController::updateBoxValue(int boxNumber) {
     Game* game = Game::instance();
     Box* box = game->currentBoxState(boxNumber);
     _boxes[boxNumber]->updateValue(box->toPrettyString());
 }
 
+// Aggiorna il background di tutte le box
 void GameController::updateAllBoxesBackground(string boxColor) {
     for (unsigned long i = 0; i < _boxes.size(); i++)
         updateBoxBackground(i, boxColor);
 }
 
+// Aggiorna il background di una box particolare
 void GameController::updateBoxBackground(int boxNumber, string boxColor) {
     _boxes[boxNumber]->updateBackground(boxColor);
 }
 
+// Aggiorna l'indicazione del turno con il nome del giocatore
 void GameController::updateCurrentPlayerName() {
     Game* game = Game::instance();
     Player* currentPlayer = game->currentPlayer();

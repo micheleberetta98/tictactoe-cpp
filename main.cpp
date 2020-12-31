@@ -4,21 +4,23 @@
 #include <memory>
 
 #include "gamecontroller.h"
+#include "lib/game.h"
 #include "playercontroller.h"
 #include "winnercontroller.h"
-#include "lib/game.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
+    // Istanziamento dei vari controller
     std::shared_ptr<GameController> game{new GameController()};
     auto boxes = game->boxControllers();
     auto currentPlayer = game->playerController();
     auto winner = game->winnerController();
 
     QQmlApplicationEngine engine;
+    // I controller sono esposti al QML: in questo modo
+    // è possibile realizzare le connessioni in attesa degli eventi
     engine.rootContext()->setContextProperty("game", game.get());
     engine.rootContext()->setContextProperty("currentPlayer", currentPlayer);
     engine.rootContext()->setContextProperty("winner", winner);
@@ -34,10 +36,10 @@ int main(int argc, char *argv[])
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
+        &app, [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        }, Qt::QueuedConnection);
     engine.load(url);
 
     return app.exec();

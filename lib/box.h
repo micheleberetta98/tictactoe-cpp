@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Gestisce la singola cella, che può contenere o meno un giocatore
 class Box : public Pretty {
    private:
     Player* p;

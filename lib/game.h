@@ -9,11 +9,18 @@
 
 using namespace std;
 
+// Struttura che rappresenta un tris
+// (o l'assenza di uno se i1 = -1)
 struct Tris {
     int i1 = -1;
     int i2 = -1;
     int i3 = -1;
 };
+
+// La classe Game implementa il pattern singleton e
+// gestisce il gioco nella sua interezza.
+// Fornisce dei metodi per poter accedere alle varie
+// informazioni mantenute nello stato privato.
 class Game {
    private:
     static bool initialized;

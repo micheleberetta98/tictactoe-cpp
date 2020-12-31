@@ -14,6 +14,14 @@
 
 using namespace std;
 
+// Il controller principale del codice.
+// Gestisce l'interazione tra il QML (view) e il codice di lib/ (model).
+// Istanzia e gestisce anche gli altri tre controller (box, player e winner).
+// Definisce un signal:
+// - gameStatusChanged per indicare se il gioco è attivo o no
+// Definisce due slot:
+// - newGame per il reset del gioco attuale
+// - move per poter effettuare una mossa
 class GameController : public QObject {
     Q_OBJECT
    private:

@@ -13,6 +13,7 @@ enum SymbolEnum : char {
     SymbolNone = ' ',
 };
 
+// Classe che gestisce un simbolo grafico
 class Symbol : virtual public Pretty {
    protected:
     SymbolEnum s;
