@@ -3,10 +3,10 @@
 #include <QQmlContext>
 #include <memory>
 
-#include "gamecontroller.h"
+#include "controllers/gamecontroller.h"
+#include "controllers/playercontroller.h"
+#include "controllers/winnercontroller.h"
 #include "lib/game.h"
-#include "playercontroller.h"
-#include "winnercontroller.h"
 
 int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -35,11 +35,13 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("box8", boxes[8]);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+    QObject::connect(
+        &engine, &QQmlApplicationEngine::objectCreated,
         &app, [url](QObject *obj, const QUrl &objUrl) {
             if (!obj && url == objUrl)
                 QCoreApplication::exit(-1);
-        }, Qt::QueuedConnection);
+        },
+        Qt::QueuedConnection);
     engine.load(url);
 
     return app.exec();

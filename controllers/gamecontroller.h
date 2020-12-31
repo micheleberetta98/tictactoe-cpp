@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 
+#include "../lib/game.h"
+#include "../lib/player.h"
 #include "boxcontroller.h"
-#include "lib/game.h"
-#include "lib/player.h"
 #include "playercontroller.h"
 #include "winnercontroller.h"
 

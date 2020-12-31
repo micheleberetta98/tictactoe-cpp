@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "lib/box.h"
-#include "lib/game.h"
-#include "lib/player.h"
+#include "../lib/box.h"
+#include "../lib/game.h"
+#include "../lib/player.h"
 
 using namespace std;
 

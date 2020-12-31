@@ -30,10 +30,10 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 if(ANDROID)
     add_library(tictactoe-cpp SHARED
       main.cpp
-      gamecontroller.cpp
-      boxcontroller.cpp
-      playercontroller.cpp
-      winnercontroller.cpp
+      controllers/gamecontroller.cpp
+      controllers/boxcontroller.cpp
+      controllers/playercontroller.cpp
+      controllers/winnercontroller.cpp
       lib/box.cpp
       lib/entity.cpp
       lib/game.cpp
@@ -44,10 +44,10 @@ if(ANDROID)
 else()
     add_executable(tictactoe-cpp
       main.cpp
-      gamecontroller.cpp
-      boxcontroller.cpp
-      playercontroller.cpp
-      winnercontroller.cpp
+      controllers/gamecontroller.cpp
+      controllers/boxcontroller.cpp
+      controllers/playercontroller.cpp
+      controllers/winnercontroller.cpp
       lib/box.cpp
       lib/entity.cpp
       lib/game.cpp
