@@ -27,14 +27,14 @@ PrettyGame::PrettyGame() {}
 PrettyGame::~PrettyGame() {}
 
 // Converte tra coordinate (0-2, 0-2) in indice 0-8
-inline int toBoxNumber(int row, int col) {
-    return row * 3 + col;
+inline int toBoxNumber(char row, char col) {
+    return (row - '0') * 3 + (col - '0');
 }
 
 // Le coordinate (row, col) sono ammissibili se negli intervalli
 // specificati e se la cella è libera
-bool isOk(int row, int col) {
-    if (row < 0 || row > 2 || col < 0 || col > 2)
+bool isOk(char row, char col) {
+    if (row < '0' || row > '2' || col < '0' || col > '2')
         return false;
 
     Game* game = Game::instance();
@@ -45,13 +45,17 @@ bool isOk(int row, int col) {
 // Esegue una mossa, chiedendo l'input all'utente
 void PrettyGame::move() {
     Game* game = Game::instance();
-    int row = -1;
-    int col = -1;
+    char row = 0;
+    char col = 0;
 
     do {
         cout << game->currentPlayer()->toPrettyString() << " (0-2 0-2): ";
         cin >> row >> col;
-    } while (!isOk(row, col));
+        if (isOk(row, col)) break;
+        cout << "Invalid input" << endl;
+        row = 0;
+        col = 0;
+    } while (true);
 
     game->move(toBoxNumber(row, col));
 }
