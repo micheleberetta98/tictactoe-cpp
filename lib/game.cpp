@@ -17,6 +17,7 @@ Game::Game() {
 Game::~Game() {
     delete player1;
     delete player2;
+    initialized = false;
 }
 
 bool Game::initialized = false;
