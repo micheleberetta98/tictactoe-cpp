@@ -9,7 +9,7 @@
 class PrettyGame {
    public:
     PrettyGame();
-    ~PrettyGame();
+    virtual ~PrettyGame();
 
     void move();
     void printGame();

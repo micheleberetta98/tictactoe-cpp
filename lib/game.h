@@ -35,7 +35,7 @@ class Game {
     Tris getTrisIn(int, int, int);
 
    public:
-    ~Game();
+    virtual ~Game();
 
     static Game* instance();
     static void newGame();

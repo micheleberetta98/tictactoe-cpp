@@ -16,7 +16,7 @@ class Box : public Pretty {
 
    public:
     Box();
-    ~Box();
+    virtual ~Box();
 
     Player* player();
     void setPlayer(Player*);
