@@ -35,8 +35,8 @@ Game* Game::instance() {
 // Resetta il gioco, fancendone iniziare uno nuovo
 // alla prossima chiamata di "instance()"
 void Game::newGame() {
-    if (game != nullptr)
-        game->~Game();
+    delete game;
+    game = nullptr;
     initialized = false;
 }
 
@@ -90,13 +90,13 @@ bool Game::isBoardFull() {
 Tris Game::getTris() {
     Tris tris;
 
+    // Rows
     tris = getTrisIn(0, 1, 2);
     if (tris.i1 != -1) return tris;
 
     tris = getTrisIn(3, 4, 5);
     if (tris.i1 != -1) return tris;
 
-    // Rows
     tris = getTrisIn(6, 7, 8);
     if (tris.i1 != -1) return tris;
 
